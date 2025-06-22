@@ -1,3 +1,5 @@
+/* App.css */
+
 .app-container {
   font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -122,28 +124,33 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 2rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 /* Homepage specific styles */
+.homepage-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
 .homepage-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
 .homepage-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #2d5016, #4a7c59);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 .homepage-subtitle {
@@ -162,9 +169,9 @@
 }
 
 .homepage-card {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 2.5rem;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -177,17 +184,18 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
-.homepage-card h3 {
+.homepage-card-title {
   font-size: 1.5rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 1rem;
 }
 
-.homepage-card p {
+.homepage-card-description {
   color: #718096;
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  font-size: 1rem;
 }
 
 .homepage-btn {
@@ -212,13 +220,13 @@
 
 .status-indicator {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #48bb78, #38a169);
   color: white;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .homepage-footer {
@@ -274,6 +282,10 @@ a,
 
   .main-content {
     margin: 1rem;
+    padding: 2rem 1rem;
+  }
+
+  .homepage-container {
     padding: 2rem 1.5rem;
   }
 
@@ -284,5 +296,9 @@ a,
   .homepage-cards {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .homepage-card {
+    padding: 2rem;
   }
 }
