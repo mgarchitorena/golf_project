@@ -1,0 +1,176 @@
+.players-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .page-header h1 {
+    font-size: 2.5rem;
+    color: #2c5530;
+    margin-bottom: 1rem;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+  
+  .debug-info {
+    background-color: #f0f8ff;
+    border: 1px solid #cce7ff;
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #0066cc;
+  }
+  
+  .loading-container {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .loading-container p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .error-container {
+    background-color: #ffe6e6;
+    border: 1px solid #ffb3b3;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: #cc0000;
+  }
+  
+  .error-container h3 {
+    margin: 0 0 1rem 0;
+    color: #cc0000;
+  }
+  
+  .error-container p {
+    margin: 0.5rem 0;
+  }
+  
+  .error-container details {
+    margin-top: 1rem;
+    background-color: #fff0f0;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ffcccc;
+  }
+  
+  .error-container summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #990000;
+  }
+  
+  .error-container ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .error-container li {
+    margin: 0.25rem 0;
+  }
+  
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .player-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .player-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .player-rank {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c5530;
+    margin-bottom: 0.5rem;
+  }
+  
+  .player-rank.placeholder {
+    color: #999;
+  }
+  
+  .player-name {
+    margin: 0.5rem 0;
+    color: #333;
+    font-size: 1.2rem;
+  }
+  
+  .player-name.placeholder {
+    color: #999;
+  }
+  
+  .player-country {
+    color: #666;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .player-country.placeholder {
+    color: #999;
+  }
+  
+  .player-points {
+    background-color: #2c5530;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+  
+  .player-points.placeholder {
+    background-color: #999;
+  }
+  
+  .page-footer {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid #eee;
+    color: #666;
+  }
+  
+  .page-footer p {
+    margin: 0;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .players-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    
+    .page-header h1 {
+      font-size: 2rem;
+    }
+    
+    .player-card {
+      padding: 1rem;
+    }
+  }
