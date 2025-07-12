@@ -1,181 +1,203 @@
-import React, { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
-
-interface ViewGroupPageProps {
-  isLoggedIn: boolean;
-}
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "./ViewGroupPage.css";
 
 interface Member {
   id: string;
   username: string;
-  points: number;
-  rank: number;
-  joinDate: string;
+  role: "owner" | "member";
+  joinedAt: string;
+  points?: number;
 }
 
-const ViewGroupPage: React.FC<ViewGroupPageProps> = ({ isLoggedIn }) => {
-  const { id } = useParams();
-  const [isMember, setIsMember] = useState(true);
-  
-  // Mock data - in a real app, this would come from an API
-  const groupData = {
-    id: id,
-    name: 'Weekend Warriors',
-    description: 'Casual golf betting group for weekend tournaments',
-    members: 8,
+interface Group {
+  id: string;
+  name: string;
+  description: string;
+  members: Member[];
+  maxMembers: number;
+  entryFee: number;
+  isPrivate: boolean;
+  owner: string;
+  createdAt: string;
+}
+
+interface ViewGroupPageProps {
+  onPickTeams?: () => void;
+}
+
+const ViewGroupPage: React.FC<ViewGroupPageProps> = ({ onPickTeams }) => {
+  const { id: groupId } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [inviteUsername, setInviteUsername] = useState("");
+
+  // Mock data - in real app, this would come from API based on groupId
+  const [group] = useState<Group>({
+    id: groupId || "1",
+    name: "Weekend Warriors",
+    description:
+      "Casual golf betting group for weekend tournaments with friends and family. We focus on having fun while adding a little excitement to our golf watching experience.",
+    members: [
+      {
+        id: "1",
+        username: "golfpro123",
+        role: "owner",
+        joinedAt: "2024-01-15",
+        points: 1450,
+      },
+      {
+        id: "2",
+        username: "tiger_fan",
+        role: "member",
+        joinedAt: "2024-01-20",
+        points: 1320,
+      },
+      {
+        id: "3",
+        username: "weekend_golfer",
+        role: "member",
+        joinedAt: "2024-02-01",
+        points: 1180,
+      },
+      {
+        id: "4",
+        username: "birdie_hunter",
+        role: "member",
+        joinedAt: "2024-02-05",
+        points: 1050,
+      },
+      {
+        id: "5",
+        username: "fairway_finder",
+        role: "member",
+        joinedAt: "2024-02-10",
+        points: 980,
+      },
+    ],
     maxMembers: 12,
     entryFee: 25,
-    totalPrize: 200,
     isPrivate: false,
-    owner: 'golfpro123'
+    owner: "golfpro123",
+    createdAt: "2024-01-15",
+  });
+
+  const [isOwner] = useState(true); // In real app, check if current user is owner
+  const totalPrize = group.members.length * group.entryFee;
+
+  const handleInvite = () => {
+    if (inviteUsername.trim()) {
+      alert(`Invitation sent to ${inviteUsername}!`);
+      setInviteUsername("");
+    }
   };
 
-  const members: Member[] = [
-    { id: '1', username: 'golfpro123', points: 1450, rank: 1, joinDate: '2025-01-15' },
-    { id: '2', username: 'tiger_fan', points: 1320, rank: 2, joinDate: '2025-01-20' },
-    { id: '3', username: 'weekend_golfer', points: 1180, rank: 3, joinDate: '2025-02-01' },
-    { id: '4', username: 'birdie_hunter', points: 1050, rank: 4, joinDate: '2025-02-05' },
-    { id: '5', username: 'fairway_finder', points: 980, rank: 5, joinDate: '2025-02-10' },
-  ];
+  const handlePickTeams = () => {
+    if (onPickTeams) {
+      onPickTeams();
+    } else {
+      navigate(`/pick-teams/${groupId}`);
+    }
+  };
 
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
+  const handleViewMemberTeams = () => {
+    navigate("/memberteams"); // Navigate to the MemberTeams page
+  };
+
+  const handleBack = () => {
+    navigate("/groups");
+  };
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 style={{ color: '#2c5530' }}>{groupData.name}</h1>
-        {!isMember ? (
-          <button
-            onClick={() => setIsMember(true)}
-            style={{
-              backgroundColor: '#2c5530',
-              color: 'white',
-              padding: '0.75rem 1.5rem',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}
-          >
-            Join Group (${groupData.entryFee})
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsMember(false)}
-            style={{
-              backgroundColor: '#dc3545',
-              color: 'white',
-              padding: '0.75rem 1.5rem',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '1rem',
-              cursor: 'pointer'
-            }}
-          >
-            Leave Group
-          </button>
-        )}
-      </div>
+    <div className="view-group-container">
+      <button onClick={handleBack} className="back-button">
+        {/* <ArrowLeft size={20} /> */}
+        Back to Groups
+      </button>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '2fr 1fr',
-        gap: '2rem',
-        marginBottom: '2rem'
-      }}>
-        <div style={{
-          border: '1px solid #ddd',
-          borderRadius: '8px',
-          padding: '2rem',
-          backgroundColor: '#f9f9f9'
-        }}>
-          <h2 style={{ color: '#2c5530', marginBottom: '1rem' }}>Group Information</h2>
-          <p style={{ marginBottom: '1rem' }}>{groupData.description}</p>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <div>
-              <strong>Owner:</strong> {groupData.owner}
-            </div>
-            <div>
-              <strong>Members:</strong> {groupData.members}/{groupData.maxMembers}
-            </div>
-            <div>
-              <strong>Entry Fee:</strong> ${groupData.entryFee}
-            </div>
-            <div>
-              <strong>Total Prize:</strong> ${groupData.totalPrize}
-            </div>
-            <div>
-              <strong>Type:</strong> {groupData.isPrivate ? 'Private' : 'Public'}
-            </div>
+      <div className="group-header">
+        <h1 className="group-title">{group.name}</h1>
+        <p className="group-description">{group.description}</p>
+
+        <div className="group-info-grid">
+          <div className="group-info-item">
+            <span className="info-value">
+              {group.members.length}/{group.maxMembers}
+            </span>
+            <span className="info-label">Members</span>
+          </div>
+          <div className="group-info-item">
+            <span className="info-value">${group.entryFee}</span>
+            <span className="info-label">Entry Fee</span>
+          </div>
+          <div className="group-info-item">
+            <span className="info-value">${totalPrize}</span>
+            <span className="info-label">Total Prize</span>
+          </div>
+          <div className="group-info-item">
+            <span className="info-value">
+              {group.isPrivate ? "Private" : "Public"}
+            </span>
+            <span className="info-label">Type</span>
           </div>
         </div>
 
-        <div style={{
-          border: '1px solid #ddd',
-          borderRadius: '8px',
-          padding: '2rem',
-          backgroundColor: '#f9f9f9'
-        }}>
-          <h2 style={{ color: '#2c5530', marginBottom: '1rem' }}>Quick Stats</h2>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2c5530' }}>
-              ${groupData.totalPrize}
-            </div>
-            <div style={{ color: '#666', marginBottom: '1rem' }}>Total Prize Pool</div>
-            
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2c5530' }}>
-              {groupData.members}
-            </div>
-            <div style={{ color: '#666' }}>Active Members</div>
-          </div>
+        <div className="main-actions">
+          <button onClick={handlePickTeams} className="btn-primary-large">
+            Pick Your Teams
+          </button>
+          <button
+            onClick={handleViewMemberTeams}
+            className="btn-secondary-large"
+          >
+            View Member Teams
+          </button>
         </div>
       </div>
 
-      <div style={{
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-        padding: '2rem',
-        backgroundColor: '#f9f9f9'
-      }}>
-        <h2 style={{ color: '#2c5530', marginBottom: '1rem' }}>Leaderboard</h2>
-        
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid #ddd' }}>
-                <th style={{ padding: '1rem', textAlign: 'left' }}>Rank</th>
-                <th style={{ padding: '1rem', textAlign: 'left' }}>Username</th>
-                <th style={{ padding: '1rem', textAlign: 'left' }}>Points</th>
-                <th style={{ padding: '1rem', textAlign: 'left' }}>Join Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map((member) => (
-                <tr key={member.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '1rem' }}>
-                    <span style={{
-                      backgroundColor: member.rank <= 3 ? '#2c5530' : '#999',
-                      color: 'white',
-                      padding: '0.25rem 0.5rem',
-                      borderRadius: '4px',
-                      fontSize: '0.9rem'
-                    }}>
-                      #{member.rank}
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', fontWeight: 'bold' }}>{member.username}</td>
-                  <td style={{ padding: '1rem' }}>{member.points}</td>
-                  <td style={{ padding: '1rem', color: '#666' }}>{member.joinDate}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="members-section" id="members">
+        <h2 className="section-title">
+          Group Members ({group.members.length})
+        </h2>
+        <div className="members-grid">
+          {group.members.map((member) => (
+            <div key={member.id} className="member-card">
+              <div className="member-info">
+                <div className="member-avatar">
+                  {member.username.charAt(0).toUpperCase()}
+                </div>
+                <div className="member-details">
+                  <h4>{member.username}</h4>
+                  <p className="member-role">
+                    {member.role === "owner" ? "👑 Owner" : "Member"}
+                    {member.points && ` • ${member.points} pts`}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      {isOwner && (
+        <div className="invite-section">
+          <h3 className="invite-title">
+            {/* <UserPlus size={20} /> */}
+            Invite New Members
+          </h3>
+          <div className="invite-form">
+            <input
+              type="text"
+              placeholder="Enter username"
+              value={inviteUsername}
+              onChange={(e) => setInviteUsername(e.target.value)}
+              className="invite-input"
+            />
+            <button onClick={handleInvite} className="btn-invite">
+              Send Invite
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

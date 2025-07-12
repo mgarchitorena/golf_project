@@ -4717,7 +4717,7 @@
       "course_timezone": "America/New_York",
       "network": "Golf Channel",
       "total_rounds": 4,
-      "status": "inprogress",
+      "status": "closed",
       "parent_id": "f47b7702-4759-4caf-9734-3ae1711275bb",
       "scoring_system": "stroke",
       "defending_champ": {
@@ -4735,6 +4735,22 @@
         "handedness": "R",
         "abbr_name": "S.Scheffler",
         "amateur": false
+      },
+      "winner": {
+        "id": "0b5d3fd6-e3ec-4efd-8743-60db44c87425",
+        "first_name": "Keegan",
+        "last_name": "Bradley",
+        "height": 75,
+        "weight": 190,
+        "birthday": "1986-06-07T00:00:00+00:00",
+        "country": "UNITED STATES",
+        "residence": "Jupiter, FL, USA",
+        "birth_place": "Woodstock, VT, USA",
+        "college": "St. John's",
+        "turned_pro": 2008,
+        "handedness": "R",
+        "abbr_name": "K.Bradley",
+        "name": "Bradley, Keegan"
       },
       "venue": {
         "id": "0d614dd2-da0e-47ab-b555-3d272e48fe25",
@@ -4892,7 +4908,7 @@
           {
             "id": "47b82b45-47d8-4ad1-b8e7-52ab657fd652",
             "name": "North Course",
-            "yardage": 7340,
+            "yardage": 7370,
             "par": 72,
             "holes": [
               {
@@ -4953,7 +4969,7 @@
               {
                 "number": 12,
                 "par": 4,
-                "yardage": 459
+                "yardage": 489
               },
               {
                 "number": 13,

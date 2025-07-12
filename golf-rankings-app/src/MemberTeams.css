@@ -1,0 +1,123 @@
+.member-teams-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.member-teams-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2.5rem;
+}
+
+.teams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.member-team {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.member-team h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.5rem;
+  text-align: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.team-table th,
+.team-table td {
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.team-table th {
+  background: #f8f9fa;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.team-table th:first-child {
+  width: 80px;
+}
+
+.team-table th:last-child {
+  width: 150px;
+  text-align: right;
+}
+
+.team-table td:first-child {
+  font-weight: bold;
+  text-align: center;
+  background: #f8f9fa;
+}
+
+.team-table td:last-child {
+  text-align: right;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+.team-table tfoot td {
+  font-weight: bold;
+  background: #f0f0f0;
+  border-top: 2px solid #333;
+}
+
+.team-table tfoot td:last-child {
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+/* Highlighted players styling */
+.highlighted-player {
+  background-color: #fff3cd;
+}
+
+.highlighted-name {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.highlighted-points {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .member-teams-page {
+    padding: 1rem;
+  }
+
+  .team-table {
+    font-size: 0.85rem;
+  }
+
+  .team-table th,
+  .team-table td {
+    padding: 8px 12px;
+  }
+
+  .member-team h2 {
+    font-size: 1.25rem;
+  }
+}

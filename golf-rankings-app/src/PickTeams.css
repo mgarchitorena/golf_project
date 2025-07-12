@@ -1,6 +1,6 @@
 .pick-teams-page {
   padding: 1rem;
-  max-width: 1400px;
+  max-width: 90000px;
   margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -30,18 +30,19 @@
 
 .pick-teams-header h1 {
   margin: 0;
-  color: #2c5530;
+  color: #b39393;
   font-size: 2.5rem;
 }
 
 .team-constraints {
   margin-left: auto;
   text-align: right;
+  color: #91ac93;
 }
 
 .team-constraints p {
   margin: 0;
-  color: #666;
+  color: #b39393;
   font-size: 1.1rem;
 }
 
@@ -243,7 +244,7 @@
 
 .available-players-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   max-height: 600px;
   overflow-y: auto;
@@ -258,6 +259,7 @@
   text-align: center;
   transition: all 0.2s;
   position: relative;
+  min-width: 200px;
 }
 
 .player-card:hover:not(.disabled) {
@@ -393,6 +395,12 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1400px) {
+  .available-players-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
   .pick-teams-content {
     grid-template-columns: 1fr;
@@ -400,6 +408,10 @@
 
   .selected-team-section {
     position: static;
+  }
+
+  .available-players-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

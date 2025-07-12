@@ -1,112 +1,112 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPageProps {
-  onLogin: (username: string) => void;
+  onLogin: (username: string, token: string) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username.trim()) {
-      onLogin(username);
-      navigate('/');
+    setError("");
+
+    try {
+      const endpoint = isSignUp
+        ? "http://localhost:5001/api/signup"
+        : "http://localhost:5001/api/login";
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+          ...(isSignUp && { email }),
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      onLogin(username, data.token); // Pass username and token to parent
+      navigate("/");
+    } catch (err) {
+      setError((err as Error).message);
     }
   };
 
   const inputStyle = {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    marginBottom: '1rem'
-  };
-
-  const buttonStyle = {
-    width: '100%',
-    padding: '0.75rem',
-    backgroundColor: '#2c5530',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    cursor: 'pointer'
+    width: "100%",
+    padding: "0.75rem",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "1rem",
   };
 
   return (
-    <div style={{ 
-      maxWidth: '400px', 
-      margin: '2rem auto',
-      padding: '2rem',
-      border: '1px solid #ddd',
-      borderRadius: '8px',
-      backgroundColor: '#f9f9f9'
-    }}>
-      <h1 style={{ 
-        textAlign: 'center', 
-        color: '#2c5530',
-        marginBottom: '2rem'
-      }}>
-        {isSignUp ? 'Sign Up' : 'Login'}
-      </h1>
-      
+    <div className="login-page">
+      <h1>{isSignUp ? "Create Account" : "Login"}</h1>
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         {isSignUp && (
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={inputStyle}
+              required
+            />
+          </div>
+        )}
+        <div>
+          <label>Username</label>
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             style={inputStyle}
             required
           />
-        )}
-        
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={inputStyle}
-          required
-        />
-        
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={inputStyle}
-          required
-        />
-        
-        <button type="submit" style={buttonStyle}>
-          {isSignUp ? 'Create Account' : 'Login'}
+        </div>
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={inputStyle}
+            required
+          />
+        </div>
+        <button type="submit" style={{ marginTop: "1rem" }}>
+          {isSignUp ? "Sign Up" : "Login"}
         </button>
       </form>
-      
-      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-        <button
-          onClick={() => setIsSignUp(!isSignUp)}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#2c5530',
-            textDecoration: 'underline',
-            cursor: 'pointer'
-          }}
-        >
-          {isSignUp ? 'Already have an account? Login' : 'Need an account? Sign Up'}
-        </button>
-      </div>
+      <button
+        onClick={() => setIsSignUp(!isSignUp)}
+        style={{
+          marginTop: "1rem",
+          background: "none",
+          border: "none",
+          color: "blue",
+          cursor: "pointer",
+        }}
+      >
+        {isSignUp ? "Already have an account? Login" : "Create an account"}
+      </button>
     </div>
   );
 };
